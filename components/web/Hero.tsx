@@ -14,7 +14,7 @@ interface Props {
 
 export default function Hero({vedieoLink,title,description,btnText}:Props) {
   return (
-    <section className="relative min-h-screen bg-slate-900 text-white overflow-hidden">
+    <section className="relative  h-screen lg:h-[724px] bg-slate-900 text-white overflow-hidden">
       {/* Video Background */}
       <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover">
         <source src={vedieoLink} type="video/mp4" />
@@ -24,7 +24,7 @@ export default function Hero({vedieoLink,title,description,btnText}:Props) {
       {/* Dark overlay for better text readability */}
       <div className="absolute inset-0 bg-black/40 z-[1]" />
 
-      <div className="relative z-10 container mx-auto px-4 py-20 flex items-center min-h-screen">
+      <div className="relative z-10 container mx-auto px-4 py-20 flex items-center  h-screen lg:h-[724px]">
         <div className="container">
           <motion.h1
             initial={{ opacity: 0, y: 50 }}
