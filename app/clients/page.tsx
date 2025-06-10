@@ -11,7 +11,7 @@ const page = () => {
       <Client_About/>
       <Logoshowcase/>
       <div className='py-5 bg-white'>
-        <Image src="/asset/cllient_bottom.png" alt="clients" width={1000} height={1000} className='w-full h-full'/>
+        <Image src="/asset/cllient_bottom.png" alt="clients" width={10000} height={10000} className='w-full h-full'/>
       </div>
     </div>
   )

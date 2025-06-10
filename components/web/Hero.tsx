@@ -54,7 +54,7 @@ export default function Hero({vedieoLink,title,description,btnText}:Props) {
           >
           {btnText &&   <Button size="lg" className="border border-[white] text-base font-normal px-[32px] h-[51px] relative group">
               <span className="relative z-10">{btnText}</span>
-              <span className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-md"></span>
+            
             </Button>}
           </motion.div>
         </div>
