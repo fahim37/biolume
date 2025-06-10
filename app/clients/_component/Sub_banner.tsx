@@ -14,7 +14,7 @@ interface Props {
 
 export default function Sub_banner({vedieoLink,title,description,btnText}:Props) {
   return (
-    <section className="relative h-screen lg:h-[572px] bg-slate-900 text-white overflow-hidden">
+    <section className="relative h-[300px] lg:h-[572px] bg-slate-900 text-white overflow-hidden">
       {/* Video Background */}
       <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover">
         <source src={vedieoLink} type="video/mp4" />

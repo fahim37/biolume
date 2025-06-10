@@ -61,7 +61,7 @@ export default function Services() {
                     width={1000}
                     height={1000}
                     alt={service.title}
-                    className="w-full h-[443px] object-cover transition-transform duration-700 group-hover:scale-110"
+                    className="w-full h-[300px] lg:h-[443px] object-cover transition-transform duration-700 group-hover:scale-110"
                   />
 
                   {/* Overlay with animated lines */}
