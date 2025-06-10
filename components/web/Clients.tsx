@@ -1,8 +1,75 @@
 "use client"
 import { motion } from "framer-motion"
 import Image from "next/image"
+import { useState, useEffect } from "react"
+
+interface Client {
+  _id: string
+  image: string
+  title: string
+  type: string
+  createdAt: string
+  updatedAt: string
+  __v: number
+}
+
+interface ApiResponse {
+  success: boolean
+  data: Client[]
+}
 
 export default function ClientLogos() {
+  const [clients, setClients] = useState<Client[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    const fetchClients = async () => {
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/data?type=Client`)
+        if (!response.ok) {
+          throw new Error("Failed to fetch clients")
+        }
+        const result: ApiResponse = await response.json()
+        if (result.success) {
+          setClients(result.data)
+        } else {
+          throw new Error("API returned unsuccessful response")
+        }
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "An error occurred")
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchClients()
+  }, [])
+
+  if (loading) {
+    return (
+      <section className="bg-[#F2F7FF] py-16 overflow-hidden">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl md:text-[40px] font-semibold text-center text-[#000000] mb-12">Our Clients</h2>
+          <div className="flex justify-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900"></div>
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  if (error) {
+    return (
+      <section className="bg-[#F2F7FF] py-16 overflow-hidden">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl md:text-[40px] font-semibold text-center text-[#000000] mb-12">Our Clients</h2>
+          <div className="text-center text-red-600">Error loading clients: {error}</div>
+        </div>
+      </section>
+    )
+  }
+
   return (
     <section className="bg-[#F2F7FF] py-16 overflow-hidden">
       <div className="container mx-auto px-4">
@@ -18,7 +85,7 @@ export default function ClientLogos() {
         <div className="flex flex-wrap justify-center items-center gap-8 md:gap-10">
           {clients.map((client, index) => (
             <motion.div
-              key={client.name}
+              key={client._id}
               className="w-32 md:w-40 flex items-center justify-center"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -33,10 +100,10 @@ export default function ClientLogos() {
               }}
             >
               <Image
-                src={client.logo || "/placeholder.svg"}
-                alt={client.name}
-                width={client.width}
-                height={client.height}
+                src={client.image || "/placeholder.svg"}
+                alt={client.title}
+                width={160}
+                height={80}
                 className="max-h-12 md:max-h-16 w-auto object-contain"
               />
             </motion.div>
@@ -46,42 +113,3 @@ export default function ClientLogos() {
     </section>
   )
 }
-
-const clients = [
-  {
-    name: "Client 1",
-    logo: "/asset/client1.png",
-    width: 120,
-    height: 60,
-  },
-  {
-    name: "MIRAL",
-    logo: "/asset/client2.png",
-    width: 120,
-    height: 60,
-  },
-  {
-    name: "BESIX",
-    logo: "/asset/client3.png",
-    width: 140,
-    height: 60,
-  },
-  {
-    name: "Shapoorji Pallonji",
-    logo: "/asset/client4.png",
-    width: 180,
-    height: 60,
-  },
-  {
-    name: "EllisDon",
-    logo: "/asset/client5.png",
-    width: 160,
-    height: 60,
-  },
-  {
-    name: "Client 6",
-    logo: "/asset/client6.png",
-    width: 120,
-    height: 60,
-  },
-]
