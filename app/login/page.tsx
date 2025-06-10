@@ -38,7 +38,7 @@ export default function LoginPage() {
         router.refresh()
       }
     } catch (error) {
-      toast.error("An error occurred during login")
+      toast.error(error instanceof Error ? error.message : "An unexpected error occurred")
     } finally {
       setLoading(false)
     }

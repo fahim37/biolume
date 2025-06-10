@@ -52,13 +52,13 @@ export default function Footer() {
 
       // Fetch services
       const servicesResponse = await fetch(
-        "http://localhost:5000/api/v1/data?type=service"
+        `${process.env.NEXT_PUBLIC_API_URL}/data?type=service`
       );
       const servicesResult = await servicesResponse.json();
 
       // Fetch projects
       const projectsResponse = await fetch(
-        "http://localhost:5000/api/v1/data?type=project"
+        `${process.env.NEXT_PUBLIC_API_URL}/data?type=project`
       );
       const projectsResult = await projectsResponse.json();
 

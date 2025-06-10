@@ -33,6 +33,7 @@ interface AddDataModalProps {
 }
 
 const dataTypes = ["service", "project", "Client", "brandPartner"];
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const formatTypeName = (str: any) => {
   return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 };
@@ -64,13 +65,17 @@ export function AddDataModal({
       formData.append("type", selectedType);
       formData.append("image", image);
 
-      const response = await fetch("http://localhost:5000/api/v1/add/data", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${(session?.user as any)?.accessToken}`,
-        },
-        body: formData,
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/add/data`,
+        {
+          method: "POST",
+          headers: {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            Authorization: `Bearer ${(session?.user as any)?.accessToken}`,
+          },
+          body: formData,
+        }
+      );
 
       const result = await response.json();
 

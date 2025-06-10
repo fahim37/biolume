@@ -25,6 +25,13 @@ interface DataItem {
   createdAt: string;
   updatedAt: string;
 }
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+  accessToken: string;
+}
 
 const dataTypes = [
   { value: "service", label: "Services" },
@@ -40,19 +47,16 @@ export default function DataPage() {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [editItem, setEditItem] = useState<DataItem | null>(null);
   const { data: session } = useSession();
-  const token = session?.user?.accessToken;
+  const token = (session?.user as User)?.accessToken;
 
   const fetchData = async (type: string) => {
     setLoading(true);
     try {
-      const response = await fetch(
-        `http://localhost:5000/api/v1/data?type=${type}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await fetch(`/data?type=${type}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const result = await response.json();
       if (result.success) {
         setData(result.data);
@@ -67,12 +71,15 @@ export default function DataPage() {
 
   const handleDelete = async (id: string) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/v1/data/${id}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${(session?.user as any)?.accessToken}`,
-        },
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/data/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${(session?.user as User)?.accessToken}`,
+          },
+        }
+      );
 
       if (response.ok) {
         toast.success("Item deleted successfully");
@@ -92,7 +99,7 @@ export default function DataPage() {
     if (session?.user) {
       fetchData(activeTab);
     }
-  }, [activeTab, session]);
+  }, [fetchData, activeTab, session,]);
 
   return (
     <div className="space-y-6">

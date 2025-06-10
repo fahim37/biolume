@@ -1,59 +1,63 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { useInView } from "framer-motion"
-import { useRef, useState, useEffect } from "react"
-import Image from "next/image"
+import { motion } from "framer-motion";
+import { useInView } from "framer-motion";
+import { useRef, useState, useEffect } from "react";
+import Image from "next/image";
 
 interface Service {
-  _id: string
-  image: string
-  title: string
-  type: string
-  createdAt: string
-  updatedAt: string
-  __v: number
+  _id: string;
+  image: string;
+  title: string;
+  type: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
 }
 
 interface ApiResponse {
-  success: boolean
-  data: Service[]
+  success: boolean;
+  data: Service[];
 }
 
 export default function Services() {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: "-100px" })
-  const [services, setServices] = useState<Service[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const [services, setServices] = useState<Service[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        setLoading(true)
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/data?type=service`)
+        setLoading(true);
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/data?type=service`
+        );
 
         if (!response.ok) {
-          throw new Error(`Failed to fetch services: ${response.status}`)
+          throw new Error(`Failed to fetch services: ${response.status}`);
         }
 
-        const data: ApiResponse = await response.json()
+        const data: ApiResponse = await response.json();
 
         if (data.success && data.data) {
-          setServices(data.data)
+          setServices(data.data);
         } else {
-          throw new Error("Invalid data format received from API")
+          throw new Error("Invalid data format received from API");
         }
       } catch (err) {
-        setError(err instanceof Error ? err.message : "An unknown error occurred")
-        console.error("Error fetching services:", err)
+        setError(
+          err instanceof Error ? err.message : "An unknown error occurred"
+        );
+        console.error("Error fetching services:", err);
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
-    }
+    };
 
-    fetchServices()
-  }, [])
+    fetchServices();
+  }, []);
 
   return (
     <section ref={ref} className="py-20 bg-[#e5f4ff]">
@@ -73,7 +77,11 @@ export default function Services() {
           </div>
         )}
 
-        {error && <div className="text-red-500 text-center py-8">Error loading services: {error}</div>}
+        {error && (
+          <div className="text-red-500 text-center py-8">
+            Error loading services: {error}
+          </div>
+        )}
 
         {!loading && !error && (
           <div className="grid md:grid-cols-2 gap-8">
@@ -81,7 +89,9 @@ export default function Services() {
               <motion.div
                 key={service._id}
                 initial={{ opacity: 0, y: 50 }}
-                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+                animate={
+                  isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }
+                }
                 transition={{ duration: 0.6, delay: index * 0.2 }}
                 whileHover={{ y: -10 }}
               >
@@ -115,5 +125,5 @@ export default function Services() {
         )}
       </div>
     </section>
-  )
+  );
 }

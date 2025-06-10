@@ -2,7 +2,7 @@
 
 import type React from "react";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import {
@@ -16,6 +16,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
+
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+  accessToken: string;
+}
 
 export default function SettingsPage() {
   const [oldPassword, setOldPassword] = useState("");
@@ -41,14 +49,15 @@ export default function SettingsPage() {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/v1/auth/change-password`,
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/change-password`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${session?.user?.accessToken}`,
+            Authorization: `Bearer ${(session?.user as User)?.accessToken}`,
           },
           body: JSON.stringify({
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             userId: (session?.user as any)?.id,
             oldPassword,
             newPassword,
@@ -102,7 +111,7 @@ export default function SettingsPage() {
             </div>
             <div className="space-y-2">
               <Label>Role</Label>
-              <Input value={(session?.user as any)?.role || ""} disabled />
+              <Input value={(session?.user as User)?.role || ""} disabled />
             </div>
           </CardContent>
         </Card>
