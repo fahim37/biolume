@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState } from "react"
-import { useSession } from "next-auth/react"
-import { Button } from "@/components/ui/button"
+import { useState } from "react";
+import { useSession } from "next-auth/react";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -12,82 +12,98 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Loader2 } from "lucide-react"
-import { toast } from "sonner"
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Loader2 } from "lucide-react";
+import { toast } from "sonner";
 
 interface AddDataModalProps {
-  isOpen: boolean
-  onClose: () => void
-  onSuccess: () => void
-  type: string
+  isOpen: boolean;
+  onClose: () => void;
+  onSuccess: () => void;
+  type: string;
 }
 
-const dataTypes = ["service", "project", "Client", "brandPartner"]
+const dataTypes = ["service", "project", "Client", "brandPartner"];
+const formatTypeName = (str: any) => {
+  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+};
 
-export function AddDataModal({ isOpen, onClose, onSuccess, type }: AddDataModalProps) {
-  const [title, setTitle] = useState("")
-  const [selectedType, setSelectedType] = useState(type)
-  const [image, setImage] = useState<File | null>(null)
-  const [loading, setLoading] = useState(false)
-  const { data: session } = useSession()
+export function AddDataModal({
+  isOpen,
+  onClose,
+  onSuccess,
+  type,
+}: AddDataModalProps) {
+  const [title, setTitle] = useState("");
+  const [selectedType, setSelectedType] = useState(type);
+  const [image, setImage] = useState<File | null>(null);
+  const [loading, setLoading] = useState(false);
+  const { data: session } = useSession();
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     if (!image) {
-      toast.error("Please select an image")
-      return
+      toast.error("Please select an image");
+      return;
     }
 
-    setLoading(true)
+    setLoading(true);
 
     try {
-      const formData = new FormData()
-      formData.append("title", title)
-      formData.append("type", selectedType)
-      formData.append("image", image)
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("type", selectedType);
+      formData.append("image", image);
 
-      const response = await fetch("http://localhost:5000/api/v1/data", {
+      const response = await fetch("http://localhost:5000/api/v1/add/data", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${(session?.user as any)?.accessToken}`,
         },
         body: formData,
-      })
+      });
 
-      const result = await response.json()
+      const result = await response.json();
 
       if (result.success) {
-        toast.success("Data added successfully")
-        setTitle("")
-        setImage(null)
-        onSuccess()
+        toast.success("Data added successfully");
+        setTitle("");
+        setImage(null);
+        onSuccess();
       } else {
-        throw new Error(result.message || "Failed to add data")
+        throw new Error(result.message || "Failed to add data");
       }
     } catch (error) {
-      console.error("Error adding data:", error)
-      toast.error("Failed to add data")
+      console.error("Error adding data:", error);
+      toast.error("Failed to add data");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   const handleClose = () => {
-    setTitle("")
-    setImage(null)
-    onClose()
-  }
+    setTitle("");
+    setImage(null);
+    onClose();
+  };
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Add New Data</DialogTitle>
-          <DialogDescription>Add a new item to your data collection</DialogDescription>
+          <DialogDescription>
+            Add a new item to your data collection
+          </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit}>
           <div className="grid gap-4 py-4">
@@ -109,13 +125,13 @@ export function AddDataModal({ isOpen, onClose, onSuccess, type }: AddDataModalP
                 Type
               </Label>
               <Select value={selectedType} onValueChange={setSelectedType}>
-                <SelectTrigger className="col-span-3">
-                  <SelectValue placeholder="Select type" />
+                <SelectTrigger className="col-span-3 w-full">
+                  <SelectValue placeholder="Select a value" />
                 </SelectTrigger>
                 <SelectContent>
                   {dataTypes.map((type) => (
                     <SelectItem key={type} value={type}>
-                      {type}
+                      {formatTypeName(type)}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -147,5 +163,5 @@ export function AddDataModal({ isOpen, onClose, onSuccess, type }: AddDataModalP
         </form>
       </DialogContent>
     </Dialog>
-  )
+  );
 }

@@ -1,9 +1,16 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
+import { useState } from "react";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -14,35 +21,35 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
-import { Edit, Trash2, Eye } from "lucide-react"
-import Image from "next/image"
+} from "@/components/ui/alert-dialog";
+import { Edit, Trash2, Eye } from "lucide-react";
+import Image from "next/image";
 
 interface DataItem {
-  _id: string
-  title?: string
-  image: string
-  type: string
-  createdAt: string
-  updatedAt: string
+  _id: string;
+  title?: string;
+  image: string;
+  type: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 interface DataTableProps {
-  data: DataItem[]
-  loading: boolean
-  onDelete: (id: string) => void
-  onEdit: (item: DataItem) => void
+  data: DataItem[];
+  loading: boolean;
+  onDelete: (id: string) => void;
+  onEdit: (item: DataItem) => void;
 }
 
 export function DataTable({ data, loading, onDelete, onEdit }: DataTableProps) {
-  const [selectedImage, setSelectedImage] = useState<string | null>(null)
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   if (loading) {
     return (
       <div className="flex items-center justify-center h-32">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
       </div>
-    )
+    );
   }
 
   if (data.length === 0) {
@@ -50,7 +57,7 @@ export function DataTable({ data, loading, onDelete, onEdit }: DataTableProps) {
       <div className="text-center py-8">
         <p className="text-muted-foreground">No data found</p>
       </div>
-    )
+    );
   }
 
   return (
@@ -70,7 +77,10 @@ export function DataTable({ data, loading, onDelete, onEdit }: DataTableProps) {
             {data.map((item) => (
               <TableRow key={item._id}>
                 <TableCell>
-                  <div className="relative h-12 w-12 cursor-pointer" onClick={() => setSelectedImage(item.image)}>
+                  <div
+                    className="relative h-12 w-12 cursor-pointer"
+                    onClick={() => setSelectedImage(item.image)}
+                  >
                     <Image
                       src={item.image || "/placeholder.svg"}
                       alt={item.title || "Image"}
@@ -79,17 +89,29 @@ export function DataTable({ data, loading, onDelete, onEdit }: DataTableProps) {
                     />
                   </div>
                 </TableCell>
-                <TableCell className="font-medium">{item.title || "No title"}</TableCell>
+                <TableCell className="font-medium">
+                  {item.title || "No title"}
+                </TableCell>
                 <TableCell>
                   <Badge variant="secondary">{item.type}</Badge>
                 </TableCell>
-                <TableCell>{new Date(item.createdAt).toLocaleDateString()}</TableCell>
+                <TableCell>
+                  {new Date(item.createdAt).toLocaleDateString()}
+                </TableCell>
                 <TableCell className="text-right">
                   <div className="flex items-center justify-end gap-2">
-                    <Button variant="ghost" size="sm" onClick={() => setSelectedImage(item.image)}>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => setSelectedImage(item.image)}
+                    >
                       <Eye className="h-4 w-4" />
                     </Button>
-                    <Button variant="ghost" size="sm" onClick={() => onEdit(item)}>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => onEdit(item)}
+                    >
                       <Edit className="h-4 w-4" />
                     </Button>
                     <AlertDialog>
@@ -102,12 +124,15 @@ export function DataTable({ data, loading, onDelete, onEdit }: DataTableProps) {
                         <AlertDialogHeader>
                           <AlertDialogTitle>Are you sure?</AlertDialogTitle>
                           <AlertDialogDescription>
-                            This action cannot be undone. This will permanently delete the item.
+                            This action cannot be undone. This will permanently
+                            delete the item.
                           </AlertDialogDescription>
                         </AlertDialogHeader>
                         <AlertDialogFooter>
                           <AlertDialogCancel>Cancel</AlertDialogCancel>
-                          <AlertDialogAction onClick={() => onDelete(item._id)}>Delete</AlertDialogAction>
+                          <AlertDialogAction onClick={() => onDelete(item._id)}>
+                            Delete
+                          </AlertDialogAction>
                         </AlertDialogFooter>
                       </AlertDialogContent>
                     </AlertDialog>
@@ -120,7 +145,10 @@ export function DataTable({ data, loading, onDelete, onEdit }: DataTableProps) {
       </div>
 
       {selectedImage && (
-        <AlertDialog open={!!selectedImage} onOpenChange={() => setSelectedImage(null)}>
+        <AlertDialog
+          open={!!selectedImage}
+          onOpenChange={() => setSelectedImage(null)}
+        >
           <AlertDialogContent className="max-w-2xl">
             <AlertDialogHeader>
               <AlertDialogTitle>Image Preview</AlertDialogTitle>
@@ -140,5 +168,5 @@ export function DataTable({ data, loading, onDelete, onEdit }: DataTableProps) {
         </AlertDialog>
       )}
     </>
-  )
+  );
 }

@@ -5,6 +5,7 @@ import { ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import Header from "@/components/web/Header";
 import Footer from "@/components/web/Footer";
+import { Toaster } from "sonner";
 
 interface LayoutWrapperProps {
   children: ReactNode;
@@ -20,6 +21,7 @@ const LayoutWrapper = ({ children }: LayoutWrapperProps) => {
       {!hideNavAndFooter && <Header />}
       {children}
       {!hideNavAndFooter && <Footer />}
+      <Toaster />
     </SessionProvider>
   );
 };

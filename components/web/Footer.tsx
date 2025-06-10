@@ -1,23 +1,36 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { useInView } from "framer-motion"
-import { useRef, useState, useEffect } from "react"
-import { Facebook, Twitter, Linkedin, Instagram } from "lucide-react"
-import Image from "next/image"
+import { motion } from "framer-motion";
+import { useInView } from "framer-motion";
+import { useRef, useState, useEffect } from "react";
+import { Facebook, Twitter, Linkedin, Instagram } from "lucide-react";
+import Image from "next/image";
+
+interface DataItem {
+  _id: string;
+  title?: string;
+  image: string;
+  type: string;
+  createdAt: string;
+  updatedAt: string;
+}
 
 export default function Footer() {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: "-100px" })
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   const [beamConfig, setBeamConfig] = useState<
     Array<{
-      top: number
-      rotation: number
-      duration: number
-      repeatDelay: number
+      top: number;
+      rotation: number;
+      duration: number;
+      repeatDelay: number;
     }>
-  >([])
+  >([]);
+
+  const [services, setServices] = useState<DataItem[]>([]);
+  const [projects, setProjects] = useState<DataItem[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // Generate random values only on client side to avoid hydration mismatch
@@ -26,32 +39,74 @@ export default function Footer() {
       rotation: Math.random() * 20 - 10,
       duration: 8 + Math.random() * 10,
       repeatDelay: Math.random() * 5,
-    }))
-    setBeamConfig(config)
-  }, [])
+    }));
+    setBeamConfig(config);
 
-  const contentLinks = [
-    "Dummy Data",
-    "Dummy Data",
-    "Dummy Data",
-    "Dummy Data",
-    "Dummy Data",
-    "Dummy Data",
-    "Dummy Data",
-  ]
+    // Fetch services and projects data
+    fetchData();
+  }, []);
 
-  const serviceLinks = [
-    "Dummy Data",
-    "Dummy Data",
-    "Dummy Data",
-    "Dummy Data",
-    "Dummy Data",
-    "Dummy Data",
-    "Dummy Data",
-  ]
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+
+      // Fetch services
+      const servicesResponse = await fetch(
+        "http://localhost:5000/api/v1/data?type=service"
+      );
+      const servicesResult = await servicesResponse.json();
+
+      // Fetch projects
+      const projectsResponse = await fetch(
+        "http://localhost:5000/api/v1/data?type=project"
+      );
+      const projectsResult = await projectsResponse.json();
+
+      if (servicesResult.success) {
+        setServices(servicesResult.data.slice(0, 6));
+      }
+
+      if (projectsResult.success) {
+        setProjects(projectsResult.data.slice(0, 6));
+      }
+    } catch (error) {
+      console.error("Error fetching footer data:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Fallback data if API fails or is loading
+  const fallbackContent = [
+    "Web Development",
+    "Mobile Apps",
+    "UI/UX Design",
+    "Digital Marketing",
+    "Brand Strategy",
+    "Consulting",
+  ];
+
+  const fallbackServices = [
+    "Custom Software",
+    "E-commerce Solutions",
+    "Cloud Services",
+    "Data Analytics",
+    "API Development",
+    "Technical Support",
+  ];
+
+  const contentLinks = loading
+    ? fallbackContent
+    : projects.map((project) => project.title || "Untitled Project");
+  const serviceLinks = loading
+    ? fallbackServices
+    : services.map((service) => service.title || "Untitled Service");
 
   return (
-    <footer ref={ref} className="bg-black text-white py-16 relative overflow-hidden">
+    <footer
+      ref={ref}
+      className="bg-black text-white py-16 relative overflow-hidden"
+    >
       {/* Animated light beams */}
       <div className="absolute inset-0 overflow-hidden">
         {beamConfig.map((config, i) => (
@@ -90,9 +145,9 @@ export default function Footer() {
           >
             <div className="w-[174px] h-[42px] max-w-full">
               <Image
-                src={"/asset/logo.png"}
-                width={1000}
-                height={1000}
+                src={"/placeholder.svg?height=42&width=174"}
+                width={174}
+                height={42}
                 alt="logo"
                 className="w-full h-full object-contain"
               />
@@ -106,7 +161,11 @@ export default function Footer() {
                   key={index}
                   href="#"
                   initial={{ opacity: 0, scale: 0 }}
-                  animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
+                  animate={
+                    isInView
+                      ? { opacity: 1, scale: 1 }
+                      : { opacity: 0, scale: 0 }
+                  }
                   transition={{ duration: 0.3, delay: 0.1 * index }}
                   whileHover={{
                     scale: 1.2,
@@ -121,20 +180,22 @@ export default function Footer() {
             </div>
           </motion.div>
 
-          {/* Content Links */}
+          {/* Projects Links */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.6, delay: 0.1 }}
             className="col-span-1 sm:col-span-1 lg:col-span-1"
           >
-            <h3 className="text-lg font-semibold mb-4">Content</h3>
+            <h3 className="text-lg font-semibold mb-4">Projects</h3>
             <ul className="space-y-2">
-              {contentLinks.map((link, index) => (
+              {contentLinks.slice(0, 6).map((link, index) => (
                 <motion.li
                   key={index}
                   initial={{ x: -20, opacity: 0 }}
-                  animate={isInView ? { x: 0, opacity: 1 } : { x: -20, opacity: 0 }}
+                  animate={
+                    isInView ? { x: 0, opacity: 1 } : { x: -20, opacity: 0 }
+                  }
                   transition={{ duration: 0.3, delay: 0.1 + index * 0.05 }}
                 >
                   <a
@@ -161,17 +222,19 @@ export default function Footer() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="col-span-1 sm:col-span-1 lg:col-span-1"
           >
-            <h3 className="text-lg font-semibold mb-4">Service</h3>
+            <h3 className="text-lg font-semibold mb-4">Services</h3>
             <ul className="space-y-2">
-              {serviceLinks.map((link, index) => (
+              {serviceLinks.slice(0, 6).map((link, index) => (
                 <motion.li
                   key={index}
                   initial={{ x: -20, opacity: 0 }}
-                  animate={isInView ? { x: 0, opacity: 1 } : { x: -20, opacity: 0 }}
+                  animate={
+                    isInView ? { x: 0, opacity: 1 } : { x: -20, opacity: 0 }
+                  }
                   transition={{ duration: 0.3, delay: 0.1 + index * 0.05 }}
                 >
                   <a
-                    href="#"
+                    href="/services"
                     className="text-gray-400 hover:text-cyan-400 transition-colors duration-300 text-sm relative group"
                   >
                     {link}
@@ -196,19 +259,24 @@ export default function Footer() {
           >
             <h3 className="text-lg font-semibold mb-4">Contact us</h3>
             <div className="space-y-2 text-sm text-gray-400">
-              {["biolumeconsulting@gmail.com", "+971 50 123 4567", "123 Business Bay", "Dubai, UAE 12345"].map(
-                (item, index) => (
-                  <motion.p
-                    key={index}
-                    initial={{ x: -20, opacity: 0 }}
-                    animate={isInView ? { x: 0, opacity: 1 } : { x: -20, opacity: 0 }}
-                    transition={{ duration: 0.3, delay: 0.3 + index * 0.1 }}
-                    whileHover={{ x: 5, color: "#22d3ee" }}
-                  >
-                    {item}
-                  </motion.p>
-                ),
-              )}
+              {[
+                "biolumeconsulting@gmail.com",
+                "+971 50 123 4567",
+                "123 Business Bay",
+                "Dubai, UAE 12345",
+              ].map((item, index) => (
+                <motion.p
+                  key={index}
+                  initial={{ x: -20, opacity: 0 }}
+                  animate={
+                    isInView ? { x: 0, opacity: 1 } : { x: -20, opacity: 0 }
+                  }
+                  transition={{ duration: 0.3, delay: 0.3 + index * 0.1 }}
+                  whileHover={{ x: 5, color: "#22d3ee" }}
+                >
+                  {item}
+                </motion.p>
+              ))}
             </div>
           </motion.div>
         </div>
@@ -224,5 +292,5 @@ export default function Footer() {
         © 2024 Agency All rights reserved.
       </motion.div>
     </footer>
-  )
+  );
 }
