@@ -130,7 +130,7 @@ export function EditDataModal({
                 Type
               </Label>
               <Select value={selectedType} onValueChange={setSelectedType}>
-                <SelectTrigger className="col-span-3">
+                <SelectTrigger className="col-span-3 w-full">
                   <SelectValue placeholder="Select type" />
                 </SelectTrigger>
                 <SelectContent>
