@@ -4,6 +4,7 @@ import { motion } from "framer-motion"
 import { useInView } from "framer-motion"
 import { MoveRight } from "lucide-react"
 import Image from "next/image"
+import Link from "next/link"
 import { useRef } from "react"
 
 export default function About() {
@@ -87,6 +88,7 @@ export default function About() {
             transition={{ duration: 0.8, delay: 0.6 }}
             className="mt-10 text-center"
           >
+           <Link href="/services#services">
             <motion.button
 
               className=" relative bg-[#434343] h-[50px] px-[32px] text-white rounded-[8px]  font-semibold text-lg group flex items-center gap-2 mx-auto"
@@ -111,6 +113,7 @@ export default function About() {
                
               />
             </motion.button>
+           </Link>
           </motion.div>
         </div>
       </div>

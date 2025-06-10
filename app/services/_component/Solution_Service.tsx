@@ -20,7 +20,7 @@ interface ApiResponse {
   data: Service[]
 }
 
-export default function Services() {
+export default function Solution_Service() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-100px" })
   const [services, setServices] = useState<Service[]>([])
@@ -56,7 +56,7 @@ export default function Services() {
   }, [])
 
   return (
-    <section ref={ref} className="py-20 bg-[#e5f4ff]">
+    <section id="services" ref={ref} className="py-20 bg-[#e5f4ff]">
       <div className="container mx-auto px-4">
         <motion.h2
           initial={{ opacity: 0, y: 30 }}
@@ -77,7 +77,7 @@ export default function Services() {
 
         {!loading && !error && (
           <div className="grid md:grid-cols-2 gap-8">
-            {services.slice(0, 4).map((service, index) => (
+            {services.map((service, index) => (
               <motion.div
                 key={service._id}
                 initial={{ opacity: 0, y: 50 }}

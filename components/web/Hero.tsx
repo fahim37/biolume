@@ -52,9 +52,8 @@ export default function Hero({vedieoLink,title,description,btnText}:Props) {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-          {btnText &&   <Button size="lg" className="border border-[white] text-base font-normal px-[32px] h-[51px] relative group">
+          {btnText &&   <Button size="lg" className="border bg-transparent hover:bg-transparent border-[white] text-base font-normal px-[32px] h-[51px] relative group">
               <span className="relative z-10">{btnText}</span>
-            
             </Button>}
           </motion.div>
         </div>
