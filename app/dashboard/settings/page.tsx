@@ -1,62 +1,95 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState } from "react"
-import { useSession } from "next-auth/react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Loader2 } from "lucide-react"
-import { changePassword } from "@/app/actions/auth"
-import { toast } from "sonner"
+import { useState } from "react";
+import { useSession } from "next-auth/react";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Loader2 } from "lucide-react";
+import { toast } from "sonner";
+
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+  accessToken: string;
+}
 
 export default function SettingsPage() {
-  const [oldPassword, setOldPassword] = useState("")
-  const [newPassword, setNewPassword] = useState("")
-  const [confirmPassword, setConfirmPassword] = useState("")
-  const [loading, setLoading] = useState(false)
-  const { data: session } = useSession()
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const { data: session } = useSession();
 
   const handleChangePassword = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
     if (newPassword !== confirmPassword) {
-      toast.error("New passwords do not match")
-      return
+      toast.error("New passwords do not match");
+      return;
     }
 
     if (newPassword.length < 6) {
-      toast.error("Password must be at least 6 characters long")
-      return
+      toast.error("Password must be at least 6 characters long");
+      return;
     }
 
-    setLoading(true)
+    setLoading(true);
 
-    const result = await changePassword({
-      userId: (session?.user as any)?.id,
-      oldPassword,
-      newPassword,
-    })
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/change-password`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${(session?.user as User)?.accessToken}`,
+          },
+          body: JSON.stringify({
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            userId: (session?.user as any)?.id,
+            oldPassword,
+            newPassword,
+          }),
+        }
+      );
 
-    if (result.success) {
-      toast.success("Password changed successfully")
-      setOldPassword("")
-      setNewPassword("")
-      setConfirmPassword("")
-    } else {
-      toast.error(result.message)
+      const result = await response.json();
+
+      if (response.ok) {
+        toast.success("Password changed successfully");
+        setOldPassword("");
+        setNewPassword("");
+        setConfirmPassword("");
+      } else {
+        toast.error(result.message || "Failed to change password");
+      }
+    } catch (error) {
+      toast.error("An error occurred while changing password");
+      console.error("Password change error:", error);
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false)
-  }
+  };
 
   return (
     <div className="space-y-6">
       <div>
         <h2 className="text-3xl font-bold tracking-tight">Settings</h2>
-        <p className="text-muted-foreground">Manage your account settings and preferences</p>
+        <p className="text-muted-foreground">
+          Manage your account settings and preferences
+        </p>
       </div>
 
       <div className="grid gap-6">
@@ -78,7 +111,7 @@ export default function SettingsPage() {
             </div>
             <div className="space-y-2">
               <Label>Role</Label>
-              <Input value={(session?.user as any)?.role || ""} disabled />
+              <Input value={(session?.user as User)?.role || ""} disabled />
             </div>
           </CardContent>
         </Card>
@@ -86,7 +119,9 @@ export default function SettingsPage() {
         <Card>
           <CardHeader>
             <CardTitle>Change Password</CardTitle>
-            <CardDescription>Update your password to keep your account secure</CardDescription>
+            <CardDescription>
+              Update your password to keep your account secure
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleChangePassword} className="space-y-4">
@@ -131,5 +166,5 @@ export default function SettingsPage() {
         </Card>
       </div>
     </div>
-  )
+  );
 }

@@ -1,70 +1,78 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import Image from "next/image"
+import { useState, useEffect } from "react";
+import Image from "next/image";
 
 interface BrandPartner {
-  _id: string
-  image: string
-  title: string
-  type: string
-  createdAt: string
-  updatedAt: string
-  __v: number
+  _id: string;
+  image: string;
+  title: string;
+  type: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
 }
 
 interface ApiResponse {
-  success: boolean
-  data: BrandPartner[]
+  success: boolean;
+  data: BrandPartner[];
 }
 
 export default function LogoShowcase() {
-  const [mounted, setMounted] = useState(false)
-  const [brands, setBrands] = useState<BrandPartner[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+  const [mounted, setMounted] = useState(false);
+  const [brands, setBrands] = useState<BrandPartner[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    setMounted(true)
-  }, [])
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     const fetchBrands = async () => {
       try {
-        setLoading(true)
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/data?type=brandPartner`)
+        setLoading(true);
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/data?type=brandPartner`
+        );
 
         if (!response.ok) {
-          throw new Error("Failed to fetch brands")
+          throw new Error("Failed to fetch brands");
         }
 
-        const result: ApiResponse = await response.json()
+        const result: ApiResponse = await response.json();
 
         if (result.success) {
-          setBrands(result.data)
+          setBrands(result.data);
         } else {
-          throw new Error("API returned unsuccessful response")
+          throw new Error("API returned unsuccessful response");
         }
       } catch (err) {
-        setError(err instanceof Error ? err.message : "An error occurred")
+        setError(err instanceof Error ? err.message : "An error occurred");
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
-    }
+    };
 
     if (mounted) {
-      fetchBrands()
+      fetchBrands();
     }
-  }, [mounted])
+  }, [mounted]);
 
   if (!mounted) {
-    return null
+    return null;
   }
 
   return (
     <div className="relative min-h-screen w-full overflow-hidden bg-black">
       {/* Background Video */}
-      <video autoPlay muted loop playsInline className="absolute inset-0 h-full w-full object-cover opacity-30">
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="absolute inset-0 h-full w-full object-cover opacity-30"
+      >
         <source src="/asset/banner5.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
@@ -101,7 +109,9 @@ export default function LogoShowcase() {
 
             {!loading && !error && brands.length === 0 && (
               <div className="text-center py-12">
-                <p className="text-white/70 text-lg">No brand partners found.</p>
+                <p className="text-white/70 text-lg">
+                  No brand partners found.
+                </p>
               </div>
             )}
 
@@ -120,8 +130,8 @@ export default function LogoShowcase() {
                         height={80}
                         className="max-h-full max-w-full object-contain transition-transform duration-300 group-hover:scale-110"
                         onError={(e) => {
-                          const target = e.target as HTMLImageElement
-                          target.src = "/placeholder.svg?height=80&width=120"
+                          const target = e.target as HTMLImageElement;
+                          target.src = "/placeholder.svg?height=80&width=120";
                         }}
                       />
                     </div>
@@ -147,5 +157,5 @@ export default function LogoShowcase() {
         <div className="absolute -bottom-1/2 -right-1/2 h-full w-full animate-pulse rounded-full bg-gradient-to-r from-green-500/10 to-blue-500/10 blur-3xl animation-delay-2000" />
       </div>
     </div>
-  )
+  );
 }

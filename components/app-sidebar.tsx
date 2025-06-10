@@ -22,6 +22,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const items = [
   {
@@ -32,12 +33,13 @@ const items = [
   {
     title: "Profile Setting",
     url: "/dashboard/settings",
-    icon: Database,
+    icon: Settings, // Changed from Database to Settings for better icon matching
   },
 ];
 
 export function AppSidebar() {
   const { data: session } = useSession();
+  const pathname = usePathname();
 
   const handleLogout = () => {
     signOut({ callbackUrl: "/login" });
@@ -52,7 +54,6 @@ export function AppSidebar() {
           </div>
           <div className="flex flex-col gap-0.5 leading-none">
             <span className="font-semibold">Admin Panel</span>
-            <span className="text-xs">v1.0.0</span>
           </div>
         </div>
       </SidebarHeader>
@@ -61,16 +62,19 @@ export function AppSidebar() {
           <SidebarGroupLabel>Navigation</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <Link href={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
+              {items.map((item) => {
+                const isActive = pathname.startsWith(item.url);
+                return (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton asChild isActive={isActive}>
+                      <Link href={item.url}>
+                        <item.icon />
+                        <span>{item.title}</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                );
+              })}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>

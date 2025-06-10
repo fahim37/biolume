@@ -1,4 +1,4 @@
-import NextAuth from "next-auth";
+import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { loginUser } from "@/app/actions/auth";
 
@@ -39,6 +39,7 @@ const authOptions = {
     error: "/login",
   },
   callbacks: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     async jwt({ token, user }: any) {
       if (user) {
         token.id = user.id;
@@ -47,6 +48,7 @@ const authOptions = {
       }
       return token;
     },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     async session({ session, token }: any) {
       if (token) {
         session.user.id = token.id as string;
@@ -65,4 +67,4 @@ const authOptions = {
 
 const handler = NextAuth(authOptions);
 
-export { handler as GET, handler as POST, authOptions };
+export { handler as GET, handler as POST };
