@@ -14,7 +14,10 @@ interface LayoutWrapperProps {
 const LayoutWrapper = ({ children }: LayoutWrapperProps) => {
   const pathname = usePathname();
   // Modified line to hide nav and footer for /dashboard and all its sub-routes
-  const hideNavAndFooter = pathname.startsWith("/dashboard");
+  const hideNavAndFooter =
+    pathname.startsWith("/dashboard") ||
+    pathname === "/login" ||
+    pathname === "/register";
 
   return (
     <SessionProvider>

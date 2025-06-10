@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react"; // Import useCallback
 import { useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import {
@@ -49,25 +49,32 @@ export default function DataPage() {
   const { data: session } = useSession();
   const token = (session?.user as User)?.accessToken;
 
-  const fetchData = async (type: string) => {
-    setLoading(true);
-    try {
-      const response = await fetch(`/data?type=${type}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const result = await response.json();
-      if (result.success) {
-        setData(result.data);
+  // Wrap fetchData in useCallback to memoize it
+  const fetchData = useCallback(
+    async (type: string) => {
+      setLoading(true);
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/data?type=${type}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        const result = await response.json();
+        if (result.success) {
+          setData(result.data);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        toast.error("Failed to fetch data");
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      console.error("Error fetching data:", error);
-      toast.error("Failed to fetch data");
-    } finally {
-      setLoading(false);
-    }
-  };
+    },
+    [token] // fetchData will only re-create if 'token' changes
+  );
 
   const handleDelete = async (id: string) => {
     try {
@@ -83,7 +90,7 @@ export default function DataPage() {
 
       if (response.ok) {
         toast.success("Item deleted successfully");
-        fetchData(activeTab);
+        fetchData(activeTab); // This call is fine as fetchData is now stable
       }
     } catch (error) {
       console.error("Error deleting item:", error);
@@ -99,7 +106,7 @@ export default function DataPage() {
     if (session?.user) {
       fetchData(activeTab);
     }
-  }, [fetchData, activeTab, session,]);
+  }, [fetchData, activeTab, session]); // fetchData is now a stable dependency
 
   return (
     <div className="space-y-6">
