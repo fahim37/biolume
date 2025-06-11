@@ -122,9 +122,9 @@ export default function About() {
             animate={isInView ? "visible" : "hidden"}
             className="text-lg text-center md:text-[24px] text-[#272727] font-normal leading-[120%] mb-6 w-auto md:w-[1170px]   mx-auto"
           >
-            At Bolume, lighting is more than a package—it's an integral part of
-            the story each space tells. Founded by a lighting specialist with
-            over a decade of experience across luxury, residential, and
+            At Bolume, lighting is more than a package—it&apos;s an integral
+            part of the story each space tells. Founded by a lighting specialist
+            with over a decade of experience across luxury, residential, and
             commercial developments, we deliver bespoke, design-driven solutions
             grounded in technical expertise. We understand the demands of
             construction timelines, consultant coordination, and the importance

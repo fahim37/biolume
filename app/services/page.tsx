@@ -2,7 +2,6 @@
 import Hero from "@/components/web/Hero";
 import React from "react";
 import Service_solution from "./_component/Service_solution";
-import Image from "next/image";
 import Solution_Service from "./_component/Solution_Service";
 import { Particles } from "@/components/magicui/particles";
 

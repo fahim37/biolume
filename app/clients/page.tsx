@@ -2,7 +2,6 @@ import React from "react";
 import Sub_banner from "./_component/Sub_banner";
 import Client_About from "./_component/Client_About";
 import Logoshowcase from "./_component/Logoshowcase";
-import Image from "next/image";
 import { Particles } from "@/components/magicui/particles";
 
 const page = () => {
