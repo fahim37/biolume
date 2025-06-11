@@ -6,12 +6,25 @@ import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import { SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
 import { Separator } from "@/components/ui/separator";
+import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 
 export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const { status } = useSession();
+  if (status === "loading") {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <div className="loader">Loading...</div>
+      </div>
+    );
+  }
+  if (status === "unauthenticated") {
+    redirect("/login");
+  }
   return (
     <SidebarProvider>
       <AppSidebar />

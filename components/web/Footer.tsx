@@ -145,7 +145,7 @@ export default function Footer() {
           >
             <div className="w-[174px] h-[42px] max-w-full">
               <Image
-                src={"/placeholder.svg?height=42&width=174"}
+                src={"/asset/logo.png"}
                 width={174}
                 height={42}
                 alt="logo"
