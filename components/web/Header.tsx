@@ -1,27 +1,27 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { motion } from "framer-motion"
-import { Menu, X } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import Image from "next/image"
-import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { Menu, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function Header() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
-  const pathname = usePathname()
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50)
-    }
+      setScrolled(window.scrollY > 50);
+    };
 
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   // Dynamic navigation items with routes
   const navItems = [
@@ -31,14 +31,14 @@ export default function Header() {
     { name: "BRAND PARTNERS", href: "/partners" },
     { name: "PROJECTS", href: "/project" },
     { name: "ABOUT US", href: "/about" },
-  ]
+  ];
 
   const isActive = (href: string) => {
     if (href === "/") {
-      return pathname === "/"
+      return pathname === "/";
     }
-    return pathname.startsWith(href)
-  }
+    return pathname.startsWith(href);
+  };
 
   return (
     <motion.header
@@ -83,14 +83,23 @@ export default function Header() {
               >
                 <Link
                   href={item.href}
-                  className="text-sm xl:text-base text-[#FFFFFF] font-normal duration-300 relative group whitespace-nowrap "
+                  className="text-sm xl:text-base text-[#FFFFFF] font-normal duration-300 relative group whitespace-nowrap"
                 >
                   {item.name}
                   <motion.span
-                    className="absolute -bottom-1 left-0 h-[2px] bg-cyan-400"
+                    className="absolute -bottom-1 left-0 h-[2px]"
+                    style={{
+                      background: isActive(item.href)
+                        ? "linear-gradient(90deg, #FFFFFF 0%, #262626 100%)"
+                        : "transparent",
+                    }}
                     initial={{ width: isActive(item.href) ? "100%" : 0 }}
                     animate={{ width: isActive(item.href) ? "100%" : 0 }}
-                    whileHover={{ width: "100%" }}
+                    whileHover={{
+                      width: "100%",
+                      background:
+                        "linear-gradient(90deg, #FFFFFF 0%, #262626 100%)",
+                    }}
                     transition={{ duration: 0.3 }}
                   />
                 </Link>
@@ -102,7 +111,11 @@ export default function Header() {
           <div className="lg:hidden">
             <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="text-white hover:text-cyan-400 hover:bg-white/10">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="text-white hover:text-cyan-400 hover:bg-white/10"
+                >
                   <Menu className="h-5 w-5 sm:h-6 sm:w-6" />
                   <span className="sr-only">Toggle menu</span>
                 </Button>
@@ -114,7 +127,13 @@ export default function Header() {
                 <div className="flex flex-col h-full">
                   {/* Logo in sidebar */}
                   <div className="flex items-center justify-between py-4 border-b border-white/10">
-                    <Image src="/asset/logo.png" alt="logo" width={120} height={32} className="object-contain" />
+                    <Image
+                      src="/asset/logo.png"
+                      alt="logo"
+                      width={120}
+                      height={32}
+                      className="object-contain"
+                    />
                     <Button
                       variant="ghost"
                       size="icon"
@@ -142,7 +161,11 @@ export default function Header() {
                           {item.name}
                           {isActive(item.href) && (
                             <motion.div
-                              className="absolute left-0 top-0 bottom-0 w-1 bg-cyan-400 rounded-r"
+                              className="absolute left-0 top-0 bottom-0 w-1 rounded-r"
+                              style={{
+                                background:
+                                  "linear-gradient(180deg, #FFFFFF 0%, #262626 100%)",
+                              }}
                               layoutId="activeIndicator"
                             />
                           )}
@@ -165,5 +188,5 @@ export default function Header() {
         transition={{ duration: 1, delay: 0.6 }}
       />
     </motion.header>
-  )
+  );
 }

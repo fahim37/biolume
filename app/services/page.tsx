@@ -15,13 +15,13 @@ const page = () => {
       <Solution_Service />
       <Service_solution />
       <div className="py-5 bg-white">
-        <Image
+        {/* <Image
           src="/asset/cllient_bottom.png"
           alt="clients"
           width={10000}
           height={10000}
           className="w-full h-full"
-        />
+        /> */}
       </div>
     </div>
   );
