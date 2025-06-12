@@ -27,14 +27,12 @@ export default function ParticleHero({ title, description, btnText }: Props) {
                 value_area: 800,
               },
             },
-            color: { value: "#ffffff" },
+            color: { value: "#00ffff" }, // Changed particle color to aqua
             shape: {
               type: "circle",
-              stroke: { width: 0, color: "#000000" },
-              polygon: { nb_sides: 5 },
             },
             opacity: {
-              value: 0.5,
+              value: 0.4,
               random: false,
               anim: {
                 enable: false,
@@ -44,7 +42,7 @@ export default function ParticleHero({ title, description, btnText }: Props) {
               },
             },
             size: {
-              value: 7,
+              value: 5,
               random: true,
               anim: {
                 enable: false,
@@ -56,9 +54,9 @@ export default function ParticleHero({ title, description, btnText }: Props) {
             line_linked: {
               enable: true,
               distance: 150,
-              color: "#ffffff",
-              opacity: 0.4,
-              width: 1,
+              color: "#00ffff", // Changed line color to aqua
+              opacity: 0.6,
+              width: 0.7,
             },
             move: {
               enable: true,
@@ -144,7 +142,7 @@ export default function ParticleHero({ title, description, btnText }: Props) {
       />
 
       {/* Overlay (non-blocking) */}
-      <div className="absolute inset-0 bg-black/20 z-[1] pointer-events-none" />
+      <div className="absolute inset-0 bg-black/20 backdrop-blur-[.5px] z-[1] pointer-events-none" />
 
       {/* Content (non-blocking) */}
       <div className="relative z-10 container mx-auto px-4 py-20 flex items-center h-screen lg:h-[724px] pointer-events-none">
