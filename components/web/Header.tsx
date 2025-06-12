@@ -181,12 +181,12 @@ export default function Header() {
       </div>
 
       {/* Animated border bottom */}
-      <motion.div
+      {/* <motion.div
         className="h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent"
         initial={{ scaleX: 0 }}
         animate={{ scaleX: 1 }}
         transition={{ duration: 1, delay: 0.6 }}
-      />
+      /> */}
     </motion.header>
   );
 }
