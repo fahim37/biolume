@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -11,17 +11,7 @@ import { usePathname } from "next/navigation";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   // Dynamic navigation items with routes
   const navItems = [
@@ -45,14 +35,14 @@ export default function Header() {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-[linear-gradient(180deg,_rgba(0,_0,_0,_0.8)_0%,_rgba(51,_51,_51,_0.4)_47.6%,_rgba(102,_102,_102,_0)_100%)] backdrop-blur-md shadow-lg"
-          : "bg-[linear-gradient(180deg,_rgba(0,_0,_0,_0.8)_0%,_rgba(51,_51,_51,_0.4)_47.6%,_rgba(102,_102,_102,_0)_100%)]"
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-black/95`}
     >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-7">
-        <div className="flex items-center justify-between lg:gap-x-[250px]">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-2">
+        {" "}
+        {/* Added lg:py-4 for more padding on larger screens */}
+        <div className="flex items-center justify-between">
+          {" "}
+          {/* Removed fixed lg:gap-x-[250px] here */}
           {/* Logo */}
           <motion.div
             initial={{ opacity: 0 }}
@@ -64,13 +54,12 @@ export default function Header() {
               <Image
                 src="/asset/logo.png"
                 alt="logo"
-                width={154}
-                height={42}
-                className="w-[120px] h-[32px] sm:w-[140px] sm:h-[38px] lg:w-[154px] lg:h-[42px] object-contain"
+                width={300}
+                height={100}
+                className="w-[120px] h-[32px] sm:w-[140px] sm:h-[38px] lg:w-[240px] lg:h-[60px] object-contain"
               />
             </Link>
           </motion.div>
-
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex space-x-6 xl:space-x-10 flex-1 justify-center">
             {navItems.map((item, index) => (
@@ -83,9 +72,49 @@ export default function Header() {
               >
                 <Link
                   href={item.href}
-                  className="text-sm xl:text-base text-[#FFFFFF] font-normal duration-300 relative group whitespace-nowrap"
+                  className="text-sm xl:text-[22px] text-[#FFFFFF] font-normal duration-300 relative group whitespace-nowrap overflow-hidden"
                 >
-                  {item.name}
+                  <motion.span
+                    className="relative z-10 block"
+                    whileHover={{
+                      scale: 1.05,
+                      textShadow: "0 0 8px rgba(255,255,255,0.8)",
+                      letterSpacing: "0.5px",
+                    }}
+                    transition={{ duration: 0.3, ease: "easeOut" }}
+                  >
+                    {item.name.split("").map((char, charIndex) => (
+                      <motion.span
+                        key={charIndex}
+                        className="inline-block"
+                        whileHover={{
+                          y: -2,
+                          color: "#00ffff",
+                        }}
+                        transition={{
+                          duration: 0.2,
+                          delay: charIndex * 0.02,
+                          ease: "easeOut",
+                        }}
+                      >
+                        {char === " " ? "\u00A0" : char}
+                      </motion.span>
+                    ))}
+                  </motion.span>
+
+                  {/* Background glow effect */}
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-r from-cyan-400/20 via-white/10 to-cyan-400/20 rounded-lg -z-10"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileHover={{
+                      opacity: 1,
+                      scale: 1.1,
+                      boxShadow: "0 0 20px rgba(0,255,255,0.3)",
+                    }}
+                    transition={{ duration: 0.3 }}
+                  />
+
+                  {/* Active/Hover underline */}
                   <motion.span
                     className="absolute -bottom-1 left-0 h-[2px]"
                     style={{
@@ -98,7 +127,8 @@ export default function Header() {
                     whileHover={{
                       width: "100%",
                       background:
-                        "linear-gradient(90deg, #FFFFFF 0%, #262626 100%)",
+                        "linear-gradient(90deg, #00ffff 0%, #FFFFFF 50%, #00ffff 100%)",
+                      boxShadow: "0 0 10px rgba(0,255,255,0.5)",
                     }}
                     transition={{ duration: 0.3 }}
                   />
@@ -106,7 +136,6 @@ export default function Header() {
               </motion.div>
             ))}
           </nav>
-
           {/* Mobile Menu Button */}
           <div className="lg:hidden">
             <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
@@ -141,6 +170,8 @@ export default function Header() {
                       onClick={() => setIsMenuOpen(false)}
                     >
                       <X className="h-5 w-5" />
+                      <span className="sr-only">Close menu</span>{" "}
+                      {/* Added sr-only for accessibility */}
                     </Button>
                   </div>
 
@@ -152,13 +183,35 @@ export default function Header() {
                         initial={{ opacity: 0, x: 20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: 0.05 * index }}
+                        className="relative overflow-hidden rounded-lg"
                       >
                         <Link
                           href={item.href}
-                          className="block py-3 px-4 text-sm font-medium text-white hover:text-cyan-400 hover:bg-white/5 transition-all duration-300 rounded-lg relative group"
+                          className="block py-3 px-4 text-sm font-medium text-white transition-all duration-300 rounded-lg relative group"
                           onClick={() => setIsMenuOpen(false)}
                         >
-                          {item.name}
+                          {/* Background slide effect */}
+                          <motion.div
+                            className="absolute inset-0 bg-gradient-to-r from-cyan-400/20 to-white/10 -z-10"
+                            initial={{ x: "-100%" }}
+                            whileHover={{ x: "0%" }}
+                            transition={{ duration: 0.3, ease: "easeOut" }}
+                          />
+
+                          {/* Text with hover animation */}
+                          <motion.span
+                            className="relative z-10 block"
+                            whileHover={{
+                              x: 8,
+                              color: "#00ffff",
+                              textShadow: "0 0 8px rgba(0,255,255,0.6)",
+                            }}
+                            transition={{ duration: 0.3, ease: "easeOut" }}
+                          >
+                            {item.name}
+                          </motion.span>
+
+                          {/* Active indicator */}
                           {isActive(item.href) && (
                             <motion.div
                               className="absolute left-0 top-0 bottom-0 w-1 rounded-r"
@@ -169,6 +222,18 @@ export default function Header() {
                               layoutId="activeIndicator"
                             />
                           )}
+
+                          {/* Hover glow effect */}
+                          <motion.div
+                            className="absolute right-2 top-1/2 w-2 h-2 bg-cyan-400 rounded-full -translate-y-1/2"
+                            initial={{ opacity: 0, scale: 0 }}
+                            whileHover={{
+                              opacity: 1,
+                              scale: 1,
+                              boxShadow: "0 0 10px rgba(0,255,255,0.8)",
+                            }}
+                            transition={{ duration: 0.2 }}
+                          />
                         </Link>
                       </motion.div>
                     ))}
@@ -179,14 +244,6 @@ export default function Header() {
           </div>
         </div>
       </div>
-
-      {/* Animated border bottom */}
-      {/* <motion.div
-        className="h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent"
-        initial={{ scaleX: 0 }}
-        animate={{ scaleX: 1 }}
-        transition={{ duration: 1, delay: 0.6 }}
-      /> */}
     </motion.header>
   );
 }

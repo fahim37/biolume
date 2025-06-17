@@ -1,54 +1,41 @@
-import Image from "next/image"
+import Image from "next/image";
 
 export default function AboutSection() {
   return (
     <div className="bg-[#E5F4F9]">
       {/* Vision and Mission Section */}
       <section className="container mx-auto px-4 py-8 md:py-16">
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+        <div className=" gap-8 lg:gap-12 items-center">
           {/* Left Content */}
           <div className="space-y-8 md:space-y-12">
             {/* Our Vision */}
             <div className="space-y-3 md:space-y-4">
-              <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-[40px] text-[#000000] font-semibold">
+              <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-[40px] text-[#000000] font-semibold text-center">
                 Our Vision
               </h2>
               <p className="text-[#000000] leading-[120%] text-sm sm:text-base md:text-lg lg:text-[24px] text-justify">
-                To be the leading source of innovative, design-driven lighting solutions in the Middle East— bridging
-                global excellence with regional creativity to illuminate spaces with purpose, beauty, soul, and
-                precision.
+                To be the leading source of innovative, design-driven lighting
+                solutions in the Middle East— bridging global excellence with
+                regional creativity to illuminate spaces with purpose, beauty,
+                soul, and precision.
               </p>
             </div>
 
             {/* Our Mission */}
             <div className="space-y-3 md:space-y-4">
-              <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-[40px] text-[#000000] font-semibold">
+              <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-[40px] text-[#000000] font-semibold text-center">
                 Our Mission
               </h2>
               <p className="text-[#000000] leading-[120%] text-sm sm:text-base md:text-lg lg:text-[24px] text-justify">
-                Our mission is to deliver lighting is more than illumination—it&apos;s experience, emotion, and identity. We
-                deliver thoughtful, high-performing solutions that enable visionaries to craft spaces that resonate and
-                endure.
+                Our mission is to deliver lighting is more than
+                illumination—it&apos;s experience, emotion, and identity. We
+                deliver thoughtful, high-performing solutions that enable
+                visionaries to craft spaces that resonate and endure.
               </p>
             </div>
           </div>
 
           {/* Right Video Background */}
-          <div className="relative w-full max-w-[570px] mx-auto h-48 sm:h-64 md:h-80 lg:h-[400px] xl:h-[618px] rounded-lg overflow-hidden">
-            <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover">
-              <source src="/asset/about2.mp4" type="video/mp4" />
-              {/* Fallback for browsers that don't support video */}
-            </video>
-            {/* Fallback background pattern if video doesn't load */}
-            <div
-              className="absolute inset-0"
-              style={{
-                backgroundImage: `radial-gradient(circle at 25% 25%, #374151 2px, transparent 2px),
-                                 radial-gradient(circle at 75% 75%, #374151 2px, transparent 2px)`,
-                backgroundPosition: "0 0, 12px 12px",
-              }}
-            ></div>
-          </div>
         </div>
       </section>
 
@@ -61,9 +48,10 @@ export default function AboutSection() {
               WHY WORK WITH US
             </h2>
             <p className="text-gray-700 max-w-4xl mx-auto leading-[120%] font-normal text-sm sm:text-base md:text-lg lg:text-[24px]">
-              Biolume brings deep knowledge, trusted supplier relationships, and strong consultant networks to every
-              project. Our design-led, technically sound solutions are tailored to each build, backed by a responsive,
-              client-centered approach.
+              Biolume brings deep knowledge, trusted supplier relationships, and
+              strong consultant networks to every project. Our design-led,
+              technically sound solutions are tailored to each build, backed by
+              a responsive, client-centered approach.
             </p>
           </div>
 
@@ -84,8 +72,9 @@ export default function AboutSection() {
                 Experience & Expertise
               </h3>
               <p className="text-[#000000] text-sm sm:text-base md:text-lg lg:text-xl leading-[150%] font-normal">
-                Biolume Brings Deep Understanding of Experience Deep Understanding of Construction Timelines and
-                Workflows Proven Track Record Managing Complex Lighting Packages.
+                Biolume Brings Deep Understanding of Experience Deep
+                Understanding of Construction Timelines and Workflows Proven
+                Track Record Managing Complex Lighting Packages.
               </p>
             </div>
 
@@ -104,8 +93,9 @@ export default function AboutSection() {
                 Reliability & Delivery
               </h3>
               <p className="text-[#000000] text-sm sm:text-base md:text-lg lg:text-xl leading-[150%] font-normal">
-                Hands-On Project and Supplier Management No Gaps—We Stay with You from Design to Delivery, Performance
-                Big Picture Thinking, Small Detail Precision.
+                Hands-On Project and Supplier Management No Gaps—We Stay with
+                You from Design to Delivery, Performance Big Picture Thinking,
+                Small Detail Precision.
               </p>
             </div>
 
@@ -124,13 +114,14 @@ export default function AboutSection() {
                 Client-Focused
               </h3>
               <p className="text-[#000000] text-sm sm:text-base md:text-lg lg:text-xl leading-[150%] font-normal">
-                We Work as an Extension of Your Team Project Knowledge That Supports Both Design and Performance Big
-                Picture Thinking, Small Detail Precision.
+                We Work as an Extension of Your Team Project Knowledge That
+                Supports Both Design and Performance Big Picture Thinking, Small
+                Detail Precision.
               </p>
             </div>
           </div>
         </div>
       </section>
     </div>
-  )
+  );
 }
