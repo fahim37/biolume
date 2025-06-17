@@ -1,11 +1,14 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { SessionProvider } from "next-auth/react";
 import { ReactNode } from "react";
 import { usePathname } from "next/navigation";
-import Header from "@/components/web/Header";
 import Footer from "@/components/web/Footer";
 import { Toaster } from "sonner";
+
+// ✅ Dynamically import Header with SSR disabled
+const Header = dynamic(() => import("@/components/web/Header"), { ssr: false });
 
 interface LayoutWrapperProps {
   children: ReactNode;
@@ -13,7 +16,7 @@ interface LayoutWrapperProps {
 
 const LayoutWrapper = ({ children }: LayoutWrapperProps) => {
   const pathname = usePathname();
-  // Modified line to hide nav and footer for /dashboard and all its sub-routes
+
   const hideNavAndFooter =
     pathname.startsWith("/dashboard") ||
     pathname === "/login" ||

@@ -143,11 +143,11 @@ export default function Footer() {
             transition={{ duration: 0.6 }}
             className="col-span-1 sm:col-span-2 lg:col-span-2"
           >
-            <div className="w-[174px] h-[42px] max-w-full">
+            <div className="w-[174px] h-[42px] lg:w-[240px] lg:h-[60px] max-w-full">
               <Image
                 src={"/asset/logo.png"}
-                width={174}
-                height={42}
+                width={300}
+                height={200}
                 alt="logo"
                 className="w-full h-full object-contain"
               />
