@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 import Footer from "@/components/web/Footer";
 import { Toaster } from "sonner";
 
-// ✅ Dynamically import Header with SSR disabled
+
 const Header = dynamic(() => import("@/components/web/Header"), { ssr: false });
 
 interface LayoutWrapperProps {

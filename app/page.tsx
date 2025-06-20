@@ -46,7 +46,7 @@ export default function Home() {
                 muted
                 playsInline
               >
-                <source src="/asset/hero-vid.mp4" type="video/mp4" />
+                <source src="/asset/hero-updated.mp4" type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
             </motion.div>
