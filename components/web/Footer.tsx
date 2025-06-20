@@ -31,6 +31,7 @@ export default function Footer() {
   const [services, setServices] = useState<DataItem[]>([]);
   const [projects, setProjects] = useState<DataItem[]>([]);
   const [loading, setLoading] = useState(true);
+  console.log(projects)
 
   useEffect(() => {
     // Generate random values only on client side to avoid hydration mismatch
@@ -77,14 +78,7 @@ export default function Footer() {
   };
 
   // Fallback data if API fails or is loading
-  const fallbackContent = [
-    "Web Development",
-    "Mobile Apps",
-    "UI/UX Design",
-    "Digital Marketing",
-    "Brand Strategy",
-    "Consulting",
-  ];
+
 
   const fallbackServices = [
     "Custom Software",
@@ -95,9 +89,9 @@ export default function Footer() {
     "Technical Support",
   ];
 
-  const contentLinks = loading
-    ? fallbackContent
-    : projects.map((project) => project.title || "Untitled Project");
+  // const contentLinks = loading
+  //   ? fallbackContent
+  //   : projects.map((project) => project.title || "Untitled Project");
   const serviceLinks = loading
     ? fallbackServices
     : services.map((service) => service.title || "Untitled Service");
