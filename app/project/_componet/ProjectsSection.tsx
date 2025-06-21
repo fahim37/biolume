@@ -81,15 +81,15 @@ export default function ProjectsSection() {
     },
     {
       id: 7,
-      name: "CENTRE OF CURIOSITY",
+      name: "GUGGENHEIM MUSEUM",
       location: "ABU DHABI",
       image: "/asset/project7.jpg",
       query: "Centre of Curiosity Abu Dhabi futuristic dome building at dusk",
     },
     {
       id: 8,
-      name: "CENTRE OF CURIOSITY",
-      location: "ABU DHABI",
+      name: "COCA COLA ARENA ",
+      location: "DUBAI",
       image: "/asset/project8.jpg",
       query: "Centre of Curiosity Abu Dhabi futuristic dome building at dusk",
     },
@@ -165,7 +165,7 @@ export default function ProjectsSection() {
                   >
                     {project.name}
                   </motion.h3>
-                  <p className="text-sm md:text-base">{project.location}</p>
+                  <p className="text-sm md:text-2xl">{project.location}</p>
                 </div>
               </motion.div>
             )
