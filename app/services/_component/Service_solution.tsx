@@ -36,7 +36,7 @@ export default function Service_solution() {
       <div className="absolute inset-0 z-0">
         <video autoPlay muted loop playsInline className="w-full h-full object-cover opacity-80">
           <source
-            src="/asset/banner3.mp4"
+            src="/asset/new.mp4"
             type="video/mp4"
           />
         </video>
