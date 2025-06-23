@@ -254,7 +254,7 @@ export default function Footer() {
         transition={{ duration: 0.6, delay: 0.4 }}
         className="border-t border-gray-800 mt-12 pt-8 px-4 container mx-auto text-sm text-gray-400 text-center sm:text-left"
       >
-        © 2024 Agency All rights reserved.
+        © 2025 Biolume All rights reserved.
       </motion.div>
     </footer>
   );

@@ -34,7 +34,7 @@ export default function ClientLogos() {
         }
         const result: ApiResponse = await response.json();
         if (result.success) {
-          setClients(result.data.slice(0, 6));
+          setClients(result.data);
         } else {
           throw new Error("API returned unsuccessful response");
         }
@@ -90,32 +90,56 @@ export default function ClientLogos() {
           Our Clients
         </motion.h2>
 
-        <div className="flex flex-wrap justify-center items-center gap-8 md:gap-10">
-          {clients.map((client, index) => (
-            <motion.div
-              key={client._id}
-              className="w-32 md:w-40 flex items-center justify-center"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                duration: 0.5,
-                delay: 0.2 + index * 0.1,
-                ease: "easeOut",
-              }}
-              whileHover={{
-                scale: 1.05,
-                transition: { duration: 0.2 },
-              }}
-            >
-              <Image
-                src={client.image || "/placeholder.svg"}
-                alt={client.title}
-                width={160}
-                height={80}
-                className="max-h-12 md:max-h-16 w-auto object-contain"
-              />
-            </motion.div>
-          ))}
+        <div className="relative overflow-hidden">
+          <motion.div
+            className="flex items-center gap-12 md:gap-16 whitespace-nowrap"
+            animate={{
+              x: [0, -50 + "%"],
+            }}
+            transition={{
+              x: {
+                repeat: Number.POSITIVE_INFINITY,
+                repeatType: "loop",
+                duration: 20, // Adjust speed here (lower = faster)
+                ease: "linear",
+              },
+            }}
+            style={{
+              width: "200%",
+            }}
+          >
+            {/* First set of logos */}
+            {clients.map((client) => (
+              <div
+                key={`first-${client._id}`}
+                className="flex-shrink-0 w-32 md:w-40 flex items-center justify-center"
+              >
+                <Image
+                  src={client.image || "/placeholder.svg"}
+                  alt={client.title}
+                  width={160}
+                  height={80}
+                  className="max-h-12 md:max-h-16 w-auto object-contain"
+                />
+              </div>
+            ))}
+
+            {/* Duplicate set for seamless loop */}
+            {clients.map((client) => (
+              <div
+                key={`second-${client._id}`}
+                className="flex-shrink-0 w-32 md:w-40 flex items-center justify-center"
+              >
+                <Image
+                  src={client.image || "/placeholder.svg"}
+                  alt={client.title}
+                  width={160}
+                  height={80}
+                  className="max-h-12 md:max-h-16 w-auto object-contain"
+                />
+              </div>
+            ))}
+          </motion.div>
         </div>
       </div>
     </section>

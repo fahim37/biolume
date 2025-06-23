@@ -2,7 +2,7 @@ import React from "react";
 import Sub_banner from "./_component/Sub_banner";
 import Client_About from "./_component/Client_About";
 import Logoshowcase from "./_component/Logoshowcase";
-import { Particles } from "@/components/magicui/particles";
+// import { Particles } from "@/components/magicui/particles";
 
 const page = () => {
   return (
@@ -14,7 +14,7 @@ const page = () => {
       />
       <Client_About />
       <Logoshowcase />
-      <div className="relative overflow-hidden h-[150px] w-full">
+      {/* <div className="relative overflow-hidden h-[150px] w-full">
         <Particles
           className="absolute inset-0 z-0"
           quantity={700}
@@ -22,7 +22,7 @@ const page = () => {
           color={"#155FFF"}
           refresh
         />
-      </div>
+      </div> */}
     </div>
   );
 };
