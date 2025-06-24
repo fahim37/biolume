@@ -17,24 +17,26 @@ export default function Home() {
     const isMobileScreen = window.innerWidth <= 768;
     setIsMobile(isMobileScreen);
 
-    if (isMobileScreen) {
-      setShowHero(true); // instantly show hero on mobile
-    } else {
-      const timer = setTimeout(() => {
-        setShowHero(true);
-      }, 4000);
-      return () => clearTimeout(timer);
-    }
+    // if (isMobileScreen) {
+    //   setShowHero(true); // instantly show hero on mobile
+    // } else {
+    const timer = setTimeout(() => {
+      setShowHero(true);
+    }, 4000);
+    return () => clearTimeout(timer);
+    // }
   }, []);
 
   return (
     <main className="min-h-screen relative">
       <div className="relative">
         <AnimatePresence mode="wait">
-          {!showHero && !isMobile ? (
+          {!showHero ? (
             <motion.div
               key="video"
-              className="relative w-full h-[724px] overflow-hidden"
+              className={`relative w-full ${
+                isMobile ? "h-[500px]" : "h-[724px]"
+              } overflow-hidden`}
               initial={{ opacity: 1 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
