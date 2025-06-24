@@ -27,9 +27,9 @@ export default function Component() {
   }
 
   return (
-   <div>
+   <div className="">
     <div className="container mx-auto py-10">
-      <h2 className="text-3xl md:text-[48px] text-[#000000] font-semibold">SOLUTIONS</h2>
+      <h2 className="text-3xl md:text-[48px] text-[#000000] font-semibold px-4 md:px-0">SOLUTIONS</h2>
     </div>
       <div className="relative min-h-screen overflow-hidden ">
       {/* Background Video */}
@@ -48,7 +48,7 @@ export default function Component() {
       <div className="relative z-10 min-h-screen flex items-center justify-center p-4 sm:p-6 lg:p-8">
         <div className=" container mx-auto">
           {/* Services Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-12 xl:gap-16">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-12 xl:gap-16">
             {services.map((service, index) => (
               <div
                 key={service.title}
@@ -58,7 +58,7 @@ export default function Component() {
                 }}
               >
                 {/* Circle Container */}
-                <div className="relative w-48 h-48 sm:w-56 sm:h-56 lg:w-64 lg:h-64 xl:w-72 xl:h-72">
+                <div className="relative w-40 h-40 sm:w-56 sm:h-56 lg:w-64 lg:h-64 xl:w-72 xl:h-72 rounded-full">
                   {/* Circle Background */}
                   <div className="absolute inset-0 rounded-full border-2 border-white bg-[#00000099] transition-all duration-500 group-hover:border-white/60 group-hover:scale-105" />
 

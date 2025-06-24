@@ -143,7 +143,7 @@ export default function About() {
           >
             <Link href="/services#services">
               <motion.button
-                className="relative bg-[#434343] h-[50px] px-[32px] text-white rounded-[8px] font-semibold text-lg group flex items-center gap-2 mx-auto"
+                className="relative bg-[#434343] h-[50px] md:h-[50px] px-[30px]  md:px-[32px] text-white rounded-[8px] font-semibold text-lg group flex items-center gap-2 mx-auto"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
