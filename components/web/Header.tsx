@@ -110,7 +110,10 @@ export default function Header() {
                   size="icon"
                   className="text-white hover:text-cyan-400 hover:bg-white/10"
                 >
-                  <Menu className="h-5 w-5 sm:h-6 sm:w-6" />
+                  <Menu
+                    className="h-10 w-10"
+                    style={{ height: "30px", width: "30px" }}
+                  />
                   <span className="sr-only">Toggle menu</span>
                 </Button>
               </SheetTrigger>
@@ -126,7 +129,7 @@ export default function Header() {
                       alt="logo"
                       width={120}
                       height={32}
-                      className="object-contain"
+                      className="object-contain w-[170px] h-[40px] lg:w-[240px] lg:h-[60px]"
                     />
                     <Button
                       variant="ghost"
