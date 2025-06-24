@@ -31,7 +31,7 @@ export default function Footer() {
   const [services, setServices] = useState<DataItem[]>([]);
   const [projects, setProjects] = useState<DataItem[]>([]);
   const [loading, setLoading] = useState(true);
-  console.log(projects)
+  console.log(projects);
 
   useEffect(() => {
     // Generate random values only on client side to avoid hydration mismatch
@@ -78,7 +78,6 @@ export default function Footer() {
   };
 
   // Fallback data if API fails or is loading
-
 
   const fallbackServices = [
     "Custom Software",
@@ -138,11 +137,11 @@ export default function Footer() {
               transition={{ duration: 0.6 }}
               className="col-span-1 sm:col-span-2 lg:col-span-2"
             >
-              <div className="w-[174px] h-[42px] lg:w-[240px] lg:h-[60px] max-w-full">
+              <div className="w-[170px] h-[40px] lg:w-[240px] lg:h-[60px] max-w-full">
                 <Image
                   src={"/asset/logo.png"}
-                  width={300}
-                  height={200}
+                  width={500}
+                  height={300}
                   alt="logo"
                   className="w-full h-full object-contain"
                 />
