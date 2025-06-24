@@ -151,7 +151,7 @@ export default function ParticleHero({ title, description, btnText }: Props) {
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-[40px] text-center md:text-[50px] lg:text-[72px] text-[#FFFFFF] font-bold leading-[120%] w-auto lg:w-[1000px] mx-auto"
+            className="text-[30px] text-center md:text-[50px] lg:text-[72px] text-[#FFFFFF] font-bold leading-[120%] w-auto lg:w-[1000px] mx-auto"
           >
             {title}
           </motion.h1>
