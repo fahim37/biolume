@@ -2,11 +2,10 @@
 
 import dynamic from "next/dynamic";
 import { SessionProvider } from "next-auth/react";
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import Footer from "@/components/web/Footer";
 import { Toaster } from "sonner";
-
 
 const Header = dynamic(() => import("@/components/web/Header"), { ssr: false });
 
@@ -16,6 +15,11 @@ interface LayoutWrapperProps {
 
 const LayoutWrapper = ({ children }: LayoutWrapperProps) => {
   const pathname = usePathname();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const hideNavAndFooter =
     pathname.startsWith("/dashboard") ||
@@ -24,9 +28,9 @@ const LayoutWrapper = ({ children }: LayoutWrapperProps) => {
 
   return (
     <SessionProvider>
-      {!hideNavAndFooter && <Header />}
+      {mounted && !hideNavAndFooter && <Header />}
       {children}
-      {!hideNavAndFooter && <Footer />}
+      {mounted && !hideNavAndFooter && <Footer />}
       <Toaster />
     </SessionProvider>
   );

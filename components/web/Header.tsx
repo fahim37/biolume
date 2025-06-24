@@ -50,9 +50,9 @@ export default function Header() {
               <Image
                 src="/asset/logo.png"
                 alt="logo"
-                width={300}
-                height={100}
-                className="w-[120px] h-[32px] sm:w-[140px] sm:h-[38px] lg:w-[240px] lg:h-[60px] object-contain"
+                width={500}
+                height={300}
+                className="w-[170px] h-[40px] lg:w-[240px] lg:h-[60px] object-contain"
               />
             </Link>
           </motion.div>
