@@ -32,7 +32,7 @@ interface AddDataModalProps {
   type: string;
 }
 
-const dataTypes = ["service", "project", "Client", "brandPartner"];
+const dataTypes = ["service", "project", "Client", "brandPartner", "decorative"];
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const formatTypeName = (str: any) => {
   return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();

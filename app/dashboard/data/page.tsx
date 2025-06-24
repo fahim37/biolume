@@ -37,7 +37,8 @@ const dataTypes = [
   { value: "service", label: "Services" },
   { value: "project", label: "Projects" },
   { value: "Client", label: "Clients" },
-  { value: "brandPartner", label: "Brand Partners" },
+  { value: "brandPartner", label: "Brand Partners - (ARCHITECTURAL)"},
+  { value: "decorative", label: "Brand Partners - (DECORATIVE)" },
 ];
 
 export default function DataPage() {
@@ -128,7 +129,7 @@ export default function DataPage() {
         onValueChange={setActiveTab}
         className="space-y-4"
       >
-        <TabsList className="grid w-full grid-cols-4">
+        <TabsList className="grid w-full grid-cols-5">
           {dataTypes.map((type) => (
             <TabsTrigger key={type.value} value={type.value}>
               {type.label}
