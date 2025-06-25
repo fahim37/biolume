@@ -123,14 +123,14 @@ export default function Header() {
               >
                 <div className="flex flex-col h-full">
                   {/* Logo in sidebar */}
-                  <div className="flex items-center justify-between py-4 border-b border-white/10">
-                    <Image
+                  <div className="flex items-center justify-end py-4 border-b border-white/10">
+                    {/* <Image
                       src="/asset/logo.png"
                       alt="logo"
                       width={120}
                       height={32}
                       className="object-contain w-[170px] h-[40px] lg:w-[240px] lg:h-[60px]"
-                    />
+                    /> */}
                     <Button
                       variant="ghost"
                       size="icon"
