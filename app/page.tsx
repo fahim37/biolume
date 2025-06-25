@@ -31,7 +31,7 @@ export default function Home() {
               initial={{ opacity: 1 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 1 }}
+              transition={{ duration: 0.01 }}
             >
               <video
                 className="w-full h-full object-cover"
@@ -48,7 +48,7 @@ export default function Home() {
               key="hero"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 1 }}
+              transition={{ duration: 0.1 }}
             >
               <ParticleHero
                 btnText="Contact Us"
