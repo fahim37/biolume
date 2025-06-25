@@ -60,11 +60,11 @@ const LogoShowcase = () => {
   }, [mounted]);
 
   return (
-    <section className="bg-gray-900 py-16">
-      <div className="container mx-auto">
+    <section className="bg-gray-900 py-8 sm:py-12 lg:py-16">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* ===== ARCHITECTURAL SECTION ===== */}
-        <div className="mb-16">
-          <h2 className="mb-8 text-center text-2xl font-bold tracking-wider text-white md:text-4xl">
+        <div className="mb-12 sm:mb-16">
+          <h2 className="mb-6 sm:mb-8 text-center text-xl font-bold tracking-wider text-white sm:text-2xl md:text-3xl lg:text-4xl">
             ARCHITECTURAL
           </h2>
 
@@ -76,10 +76,10 @@ const LogoShowcase = () => {
 
           {error && (
             <div className="text-center py-12">
-              <p className="text-red-400 text-lg">Error: {error}</p>
+              <p className="text-red-400 text-base sm:text-lg">Error: {error}</p>
               <button
                 onClick={() => window.location.reload()}
-                className="mt-4 px-6 py-2 bg-white/20 text-white rounded-lg hover:bg-white/30 transition-colors"
+                className="mt-4 px-4 sm:px-6 py-2 bg-white/20 text-white rounded-lg hover:bg-white/30 transition-colors text-sm sm:text-base"
               >
                 Retry
               </button>
@@ -88,34 +88,32 @@ const LogoShowcase = () => {
 
           {!loading && !error && brands.length === 0 && (
             <div className="text-center py-12">
-              <p className="text-white/70 text-lg">
+              <p className="text-white/70 text-base sm:text-lg">
                 No architectural brand partners found.
               </p>
             </div>
           )}
 
           {!loading && !error && brands.length > 0 && (
-            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 max-w-6xl mx-auto">
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 max-w-6xl mx-auto">
               {brands.map((brand) => (
                 <div
                   key={brand._id}
-                  className="group relative aspect-[3/2] overflow-hidden rounded-lg bg-[#E5F4FF] p-4 transition-all duration-300 hover:bg-[#E5F4FF] hover:scale-[104%]"
+                  className="group relative aspect-[3/2] overflow-hidden rounded-lg bg-[#E5F4FF] p-2 sm:p-3 lg:p-3 transition-all duration-300 hover:bg-[#E5F4FF] hover:scale-[102%] sm:hover:scale-[104%]"
                 >
-                  {/* Logo Container - Adjust these values to change logo size */}
                   <div className="relative w-full h-full flex items-center justify-center">
                     <Image
                       src={brand.image || "/placeholder.svg"}
                       alt={brand.title}
-                      width={130} // Adjust logo width
-                      height={90} // Adjust logo height
-                      className="object-cover" // Change to 'object-cover' for different sizing
+                      fill
+                      sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
+                      className="object-contain p-2 sm:p-3 lg:p-2 lg:scale-[0.7]"
                       onError={(e) => {
                         const target = e.target as HTMLImageElement;
                         target.src = "/placeholder.svg";
                       }}
                     />
                   </div>
-                  {/* Hover overlay effect */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                 </div>
               ))}
@@ -125,32 +123,30 @@ const LogoShowcase = () => {
 
         {/* ===== DECORATIVE SECTION ===== */}
         <div>
-          <h2 className="mb-8 text-center text-2xl font-bold tracking-wider text-white md:text-4xl">
+          <h2 className="mb-6 sm:mb-8 text-center text-xl font-bold tracking-wider text-white sm:text-2xl md:text-3xl lg:text-4xl">
             DECORATIVE
           </h2>
 
           {!loading && !error && decorativeBrands.length > 0 && (
-            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 max-w-6xl mx-auto">
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 max-w-6xl mx-auto">
               {decorativeBrands.map((brand) => (
                 <div
                   key={brand._id}
-                  className="group relative aspect-[3/2] overflow-hidden rounded-lg bg-[#E5F4FF] p-4 transition-all duration-300 hover:bg-[#E5F4FF] hover:scale-[104%]"
+                  className="group relative aspect-[3/2] overflow-hidden rounded-lg bg-[#E5F4FF] p-2 sm:p-3 lg:p-3 transition-all duration-300 hover:bg-[#E5F4FF] hover:scale-[102%] sm:hover:scale-[104%]"
                 >
-                  {/* Logo Container - Same styling as architectural section */}
                   <div className="relative w-full h-full flex items-center justify-center">
                     <Image
                       src={brand.image || "/placeholder.svg"}
                       alt={brand.title}
-                      width={130} // Consistent with architectural section
-                      height={90} // Consistent with architectural section
-                      className="object-cover" // Same as above
+                      fill
+                      sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
+                      className="object-contain p-2 sm:p-3 lg:p-2 lg:scale-[0.7]"
                       onError={(e) => {
                         const target = e.target as HTMLImageElement;
                         target.src = "/placeholder.svg";
                       }}
                     />
                   </div>
-                  {/* Hover overlay effect */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                 </div>
               ))}
